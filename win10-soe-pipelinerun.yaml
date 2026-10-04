@@ -1,0 +1,25 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  generateName: win10-soe-installer-
+  namespace: windows-build
+spec:
+  timeouts:
+    pipeline: 7h0m0s
+    tasks: 6h30m0s
+    finally: 30m0s
+  params:
+    - name: winImageDownloadURL
+      value: http://freighter.local.labmesh.org/isos/Win10_22H2_English_x64.iso
+    - name: acceptEula
+      value: "true"            # you agree to the Microsoft EULA by setting this
+    - name: preferenceName
+      value: windows.10.virtio
+    - name: autounattendConfigMapName
+      value: win10-soe-autounattend
+    - name: baseDvName
+      value: win10-soe         # the golden image
+    - name: isoDVName
+      value: win10-iso
+  pipelineRef:
+    name: win10-soe-installer

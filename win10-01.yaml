@@ -1,0 +1,51 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: win10-01
+  namespace: windows-build
+spec:
+  runStrategy: Always
+  preference:
+    kind: VirtualMachineClusterPreference
+    name: windows.10.virtio
+  dataVolumeTemplates:
+    - metadata:
+        name: win10-01-root
+      spec:
+        sourceRef:
+          kind: DataSource
+          name: win10-soe
+          namespace: windows-build
+        storage:
+          resources:
+            requests:
+              storage: 40Gi
+  template:
+    spec:
+      domain:
+        cpu:
+          sockets: 2
+        memory:
+          guest: 4Gi
+        devices:
+          disks:
+            - name: root
+              disk: {}
+            - name: seed
+              cdrom: {}
+          interfaces:
+            - name: default
+              masquerade: {}
+      networks:
+        - name: default
+          pod: {}
+      volumes:
+        - name: root
+          dataVolume:
+            name: win10-01-root
+        - name: seed
+          cloudInitNoCloud:
+            userData: |
+              #ps1_sysnative
+              Set-TimeZone -Id "UTC"
+              New-Item C:\hello-from-cloudbase-init.txt
