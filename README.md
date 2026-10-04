@@ -300,6 +300,9 @@ The installer VM's root disk is **virtio**, hence `viostor`.
 ```bash
 cat > autounattend/autounattend.xml << 'EOF2'
 <?xml version="1.0" encoding="utf-8"?>
+<!-- KMS client setup key (GVLK) for Windows 10 Pro, published by Microsoft:
+     https://learn.microsoft.com/en-us/windows-server/get-started/kms-client-activation-keys
+     Selects the edition only; does not activate without a KMS host. -->
 <unattend xmlns="urn:schemas-microsoft-com:unattend" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
 
   <settings pass="windowsPE">
