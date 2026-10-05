@@ -1,6 +1,6 @@
 # Windows SOE on OpenShift Virtualization with Tekton
 
-**Repo:** `windows-soe-tekton` (separate from the Packer project `packer-windows-build`)
+**Repo:** `tekton-windows-build-POC` (separate from the Packer project `packer-windows-build`)
 
 A tested, step-by-step guide to building a sysprepped **Windows 10 22H2** golden image inside OpenShift with **OpenShift Pipelines (Tekton)**, then creating VMs from it that boot with their own hostname, settings, grown disk and a working guest agent.
 
@@ -57,7 +57,7 @@ How it maps to the Packer project:
 ## Repo layout
 
 ```
-windows-soe-tekton/
+tekton-windows-build-POC/
 ├── README.md                              # this guide
 ├── cluster/                               # Part A: one-time cluster setup
 │   ├── pipelines-subscription.yaml
@@ -78,8 +78,8 @@ windows-soe-tekton/
 ```
 
 ```bash
-mkdir -p windows-soe-tekton/{cluster,autounattend,pipeline,runs,vms,scripts}
-cd windows-soe-tekton
+mkdir -p tekton-windows-build-POC/{cluster,autounattend,pipeline,runs,vms,scripts}
+cd tekton-windows-build-POC
 git init
 ```
 
@@ -871,7 +871,7 @@ There are **three** ways to combine these tools. This repo uses **B**.
 | Where the build VM runs | QEMU on freighter | A KubeVirt VM in the cluster | A KubeVirt VM in the cluster (via the `kubevirt-iso` builder) |
 | How the VM is customised | Packer connects over WinRM | The answer file runs `post-install.ps1` | Packer connects over WinRM/SSH, through the cluster |
 | Where the image ends up | A qcow2 file | A DataVolume + DataSource | A DataVolume |
-| Repo | `packer-windows-build` | `windows-soe-tekton` | Could reuse much of `packer-windows-build` |
+| Repo | `packer-windows-build` | `tekton-windows-build-POC` | Could reuse much of `packer-windows-build` |
 
 Option C uses HashiCorp's **KubeVirt plugin for Packer** (`github.com/hashicorp/kubevirt`, builder `kubevirt-iso`), which builds images from an ISO **inside** the cluster. Its own README describes it as under development and **not production ready**, so check its status before relying on it.
 
