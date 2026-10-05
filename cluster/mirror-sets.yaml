@@ -1,0 +1,25 @@
+apiVersion: config.openshift.io/v1
+kind: ImageTagMirrorSet
+metadata:
+  name: windows-pipeline-tags
+spec:
+  imageTagMirrors:
+    - source: registry.redhat.io/container-native-virtualization/kubevirt-tekton-tasks-create-datavolume-rhel9
+      mirrors:
+        - quay.local.labmesh.org/mirror/kubevirt-tekton-tasks-create-datavolume-rhel9
+    - source: registry.redhat.io/container-native-virtualization/kubevirt-tekton-tasks-disk-virt-customize-rhel9
+      mirrors:
+        - quay.local.labmesh.org/mirror/kubevirt-tekton-tasks-disk-virt-customize-rhel9
+    - source: registry.redhat.io/container-native-virtualization/virtio-win-rhel9
+      mirrors:
+        - quay.local.labmesh.org/mirror/virtio-win-rhel9
+---
+apiVersion: config.openshift.io/v1
+kind: ImageDigestMirrorSet
+metadata:
+  name: windows-pipeline-digests
+spec:
+  imageDigestMirrors:
+    - source: registry.redhat.io/openshift4/ose-cli
+      mirrors:
+        - quay.local.labmesh.org/mirror/ose-cli
